@@ -14,8 +14,8 @@
 
 	if (isset($_POST['enviar'])) {
 		//si presiono enviar se ejecuta estas intrucciones
-		$name = trim($_POST['name']);
-		$pin = trim($_POST['pin']);
+		$name = htmlentities(trim($_POST['name']));
+		$pin = htmlentities(trim($_POST['pin']));
 
 		//validar esto plis
 		mysqli_select_db($conex, $bd) or die ("Error al conectar a la base de Datos");
