@@ -17,7 +17,7 @@
 		$name = trim($_POST['name']);
 		$pin = trim($_POST['pin']);
 
-		//validar
+		//validar esto plis
 		mysqli_select_db($conex, $bd) or die ("Error al conectar a la base de Datos");
 	 	$result = mysqli_query($conex, "SELECT * FROM usuarios WHERE nombre = '$name' AND Cedula = '$pin'");
 
