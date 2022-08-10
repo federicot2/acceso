@@ -14,10 +14,12 @@
 
 	if (isset($_POST['enviar'])) {
 		//si presiono enviar se ejecuta estas intrucciones
-		$name = htmlentities(trim($_POST['name']));
-		$pin = htmlentities(trim($_POST['pin']));
 
-		//validar esto plis
+		//htmlentities
+		$name = trim($_POST['name']);
+		$pin = trim($_POST['pin']);
+
+		//conectar a base de datos
 		mysqli_select_db($conex, $bd) or die ("Error al conectar a la base de Datos");
 	 	$result = mysqli_query($conex, "SELECT * FROM usuarios WHERE nombre = '$name' AND Cedula = '$pin'");
 
@@ -30,7 +32,7 @@
 	}
 
 	?>
-	<form method="post">
+	<form method="post" autocomplete="off">
 		<h2>Login</h2>
 		Nombre: <input type="text" name="name" required>
 		<br><br>
