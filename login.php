@@ -10,25 +10,35 @@
 	<?php
 	include ("conect.php");
 	//variables
-	$name = $pin ="";
+	/*$name = $pin ="";*/
 
 	if (isset($_POST['enviar'])) {
 		//si presiono enviar se ejecuta estas intrucciones
-
-		//htmlentities
 		$name = trim($_POST['name']);
 		$pin = trim($_POST['pin']);
+		//buscar en la db usario y contraseña
+	 	$userQuery = $conex->prepare("SELECT * FROM usuarios WHERE nombre = :name");
 
-		//conectar a base de datos
-		mysqli_select_db($conex, $bd) or die ("Error al conectar a la base de Datos");
-	 	$result = mysqli_query($conex, "SELECT * FROM usuarios WHERE nombre = '$name' AND Cedula = '$pin'");
+		$userQuery->execute([
+			":name" => $name
+		]);
 
-	 	if(mysqli_fetch_array($result)){
+		$user = $userQuery->fetch(PDO::FETCH_OBJ);
+
+		$db_password = $user->pin;
+
+	 	/*if($userQuery->rowCount()){
 	 		header("Location: hola.html");
 	 	}
 	 	else{
 	 	 echo"No se encontro el usuario";
-	 	}
+	 	}*/
+		if(password_verify($pin,$db_password)){
+			header("Location: hola.html");
+		}
+		else{
+			echo"No se encontro el usuario";
+		}
 	}
 
 	?>

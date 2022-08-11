@@ -17,45 +17,54 @@
 	//paso 4
 	//defino las variables
 	//agregue cedula
-	$nombre = $apellido = $cedula =$direccion = $fecha = $genero ="";
+	/*$nombre = $apellido = $cedula =$direccion = $fecha = $genero ="";*/
 
 	if (isset($_POST['submit'])) {
-			if (strlen($_POST['nombre']) >= 1 && strlen($_POST['apellido']) >= 1 && strlen($_POST['cedula']) >= 1 && strlen($_POST['direccion']) >= 1 && strlen($_POST['fecha']) >= 1 && strlen($_POST['genero']) >= 1) {
+		//si presiono enviar se ejecuta estas intrucciones
+		$nombre = trim($_POST['nombre']);
+		$apellido = trim($_POST['apellido']);
+		$cedula = trim($_POST['cedula']);//nuevo
+		$direccion = trim($_POST['direccion']);
+		$fecha = $_POST['fecha'];
+		$genero = $_POST['genero'];
 
-			//si presiono enviar se ejecuta estas intrucciones
-			$nombre = trim($_POST['nombre']);
-			$apellido = trim($_POST['apellido']);
-			$cedula = trim($_POST['cedula']);//nuevo
-			$direccion = trim($_POST['direccion']);
-			$fecha = $_POST['fecha'];
-			$genero = $_POST['genero'];
-
-			//insetar los datos a la base de datos
-			$consulta = "INSERT INTO usuarios(nombre,apellido,cedula,direccion,fecha,genero) VALUES ('$nombre','$apellido','$cedula','$direccion','$fecha','$genero')";
-			$query = mysqli_query($conex, $consulta);
-			if ($query) {
-				echo"datos guardados correctamente!";
-			}
-			else{
-				echo"incorrecto";
-			}
+		//insetar los datos a la base de datos
+		/*$consulta = "INSERT INTO usuarios(nombre,apellido,cedula,direccion,fecha,genero) VALUES ('$nombre','$apellido','$cedula','$direccion','$fecha','$genero')";
+		$query = mysqli_query($conex, $consulta);
+		if ($query) {
+			echo"datos guardados correctamente!";
 		}
+		else{
+			echo"incorrecto";
+		}*/
+		$insertQuery = $conex->prepare("INSERT INTO usuarios(nombre,apellido,cedula,direccion,fecha,genero) VALUES (:nombre,:apellido,:cedula,:direccion,:fecha,:genero)");
+
+		$insertQuery->execute(
+			array(
+				'nombre'=>$nombre,
+				'apellido'=>$apellido,
+				'direccion'=>$direccion,
+				'fecha'=>$fecha,
+				'genero'=>$genero,
+				'cedula'=>password_hash($cedula,PASSWORD_BCRYPT,[20])
+			)
+		);
 	}
 
 	?>
 	<form method="post">
 		<h2>Formulario</h2>
-		Nombre: <input type="text" name="nombre">
+		Nombre: <input type="text" name="nombre" required>
 		<br><br>
-		apellido: <input type="text" name="apellido">
+		apellido: <input type="text" name="apellido" required>
 		<br><br>
-		cedula: <input type="text" name="cedula">
+		cedula: <input type="text" name="cedula" required>
 		<br><br>
-		Direccion:<input type="text" name="direccion">
+		Direccion:<input type="text" name="direccion" required>
 		<br><br>
-		Fecha de nacimiento:<input type="date" name="fecha">
+		Fecha de nacimiento:<input type="date" name="fecha" required>
 		<br><br>
-		Genero:	<input type="radio" name="genero" value="Mujer">Mujer
+		Genero:	<input type="radio" name="genero" value="Mujer" >Mujer
   				<input type="radio" name="genero" value="Hombre">Hombre
   		<br><br>
   		<input type="submit" name="submit" value="Enviar">
@@ -75,35 +84,5 @@
 		echo "<br>";
 		echo $genero;
 	?>
-	<table border="1">
-		<h2>Tabla de Datos:</h2>
-		<tr>
-			<td>ID</td>
-			<td>Nombre</td>
-			<td>Apellido</td>
-			<td>Cedula</td>
-			<td>Direccion</td>
-			<td>Fecha</td>
-			<td>Genero</td>
-		</tr>
-		<?php
-			$sql="SELECT * from usuarios";
-			$result=mysqli_query($conex,$sql);
-			while ($mostrar=mysqli_fetch_array($result)) {
-		?>
-		<tr>
-			<td><?php echo $mostrar['ID']?></td>
-			<td><?php echo $mostrar['nombre']?></td>
-			<td><?php echo $mostrar['apellido']?></td>
-			<td><?php echo $mostrar['cedula']?></td>
-			<td><?php echo $mostrar['direccion']?></td>
-			<td><?php echo $mostrar['fecha']?></td>
-			<td><?php echo $mostrar['genero']?></td>
-		</tr>
-		<?php
-	}
-	?>
-	</table>
-
 </body>
 </html>
