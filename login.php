@@ -25,7 +25,12 @@
 
 		$user = $userQuery->fetch(PDO::FETCH_OBJ);
 
-		$db_password = $user->pin;
+
+		try{
+			$db_password = $user->cedula;
+		}catch(Exception $e){
+			error_reporting(0);
+		}
 
 	 	/*if($userQuery->rowCount()){
 	 		header("Location: hola.html");
@@ -33,11 +38,13 @@
 	 	else{
 	 	 echo"No se encontro el usuario";
 	 	}*/
-		if(password_verify($pin,$db_password)){
+		if(password_verify($pin, $db_password)){
 			header("Location: hola.html");
+
 		}
 		else{
 			echo"No se encontro el usuario";
+			
 		}
 	}
 

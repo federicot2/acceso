@@ -17,7 +17,7 @@
 	//paso 4
 	//defino las variables
 	//agregue cedula
-	/*$nombre = $apellido = $cedula =$direccion = $fecha = $genero ="";*/
+	$nombre = $apellido = $cedula =$direccion = $fecha = $genero ="";
 
 	if (isset($_POST['submit'])) {
 		//si presiono enviar se ejecuta estas intrucciones
