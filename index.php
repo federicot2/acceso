@@ -1,18 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Formulario</title>
-</head>
-<body>
-	<?php
-		//Primer hola mundo en php, paso 3 del reto
-		echo "Hola Mundo";
-		echo "<br><br>";
-	?>
-
-	<?php
+<?php
+	session_start();
 	include ("conect.php");
 	//paso 4
 	//defino las variables
@@ -50,8 +37,23 @@
 			)
 		);
 	}
+?>
 
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Formulario</title>
+</head>
+<body>
+	<?php
+		//Primer hola mundo en php, paso 3 del reto
+		echo "Hola Mundo";
+		echo "<br><br>";
 	?>
+
+	
 	<form method="post">
 		<h2>Formulario</h2>
 		Nombre: <input type="text" name="nombre" required>
@@ -64,10 +66,10 @@
 		<br><br>
 		Fecha de nacimiento:<input type="date" name="fecha" required>
 		<br><br>
-		Genero:	<input type="radio" name="genero" value="Mujer" >Mujer
+		Genero:	<input type="radio" name="genero" value="Mujer" required>Mujer
   				<input type="radio" name="genero" value="Hombre">Hombre
   		<br><br>
-  		<input type="submit" name="submit" value="Enviar">
+  		<input type="submit" name="submit" value="Enviar"> 
 	</form>
 	<?php
 	//impresion de los datos que guardamos

@@ -1,13 +1,7 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Login</title>
-</head>
-<body>
 
-	<?php
+<?php
+	session_start();
+	ini_set ('error_reporting', E_ALL);
 	include ("conect.php");
 	//variables
 	/*$name = $pin ="";*/
@@ -25,12 +19,8 @@
 
 		$user = $userQuery->fetch(PDO::FETCH_OBJ);
 
+		$db_password = $user->cedula;
 
-		try{
-			$db_password = $user->cedula;
-		}catch(Exception $e){
-			error_reporting(0);
-		}
 
 	 	/*if($userQuery->rowCount()){
 	 		header("Location: hola.html");
@@ -39,7 +29,7 @@
 	 	 echo"No se encontro el usuario";
 	 	}*/
 		if(password_verify($pin, $db_password)){
-			header("Location: hola.html");
+			header("Location: hola.php");
 
 		}
 		else{
@@ -48,12 +38,20 @@
 		}
 	}
 
-	?>
+?>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Login</title>
+</head>
+<body>
 	<form method="post" autocomplete="off">
 		<h2>Login</h2>
-		Nombre: <input type="text" name="name" required>
+		User: <input type="text" name="name" required>
 		<br><br>
-		Cedula: <input type="text" name="pin" required>
+		password: <input type="password" name="pin" required>
 		<br><br>
   		<input type="submit" name="enviar" value="Enviar">
 	</form>
