@@ -18,16 +18,12 @@
 		]);
 
 		$user = $userQuery->fetch(PDO::FETCH_OBJ);
-
+		
+		//igualamos datos datos de la columna cedula que esta en nuestra DB
 		$db_password = $user->cedula;
 
-
-	 	/*if($userQuery->rowCount()){
-	 		header("Location: hola.html");
-	 	}
-	 	else{
-	 	 echo"No se encontro el usuario";
-	 	}*/
+		//verificamos que el pin ingresado sea igual al de la DB
+		//password_verify es una funicón que compara hashing y dato ingresado
 		if(password_verify($pin, $db_password)){
 			header("Location: hola.php");
 
